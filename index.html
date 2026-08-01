@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kinchi Compute</title>
+
+    <!-- Favicon Fix -->
+    <link rel="icon" href="applogo.png" type="image/png">
+    
+    <!-- PWA Manifest & Icons -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7293ff">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="applogo.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header containing Logo and Center Text -->
+    <header class="top-header">
+        <div class="header-left">
+            <img src="logo.png" alt="Kinchi Compute Logo" class="app-logo">
+        </div>
+
+        <div class="header-center">
+            <h1 class="app-title">Kinchi Compute</h1>
+            <p class="subtitle">Your modern companion for quick calculations.</p>
+        </div>
+    </header>
+
+    <!-- Main Section wrapping Calculator + Switch -->
+    <div class="main-wrapper">
+        <div class="app-container">
+            
+            <!-- Toggle Switch container -->
+            <div class="toggle-container">
+                <span class="toggle-label">Is light hurting your eyes? Try night mode!</span>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="theme-checkbox">
+                    <span class="slider">
+                        <span class="icon moon">🌙</span>
+                        <span class="icon sun">☀️</span>
+                    </span>
+                </label>
+            
+                <div id="theme-tooltip" class="hint-popup left-popup">
+                    <span class="popup-title">🌙 Dark Mode</span>
+                    <p>Toggle theme anytime!</p>
+                    <button class="popup-close-btn" onclick="dismissTooltip('theme-tooltip')">Got it</button>
+                </div>
+            </div>
+
+            <!-- Main Calculator Card -->
+            <main class="calculator-card">
+
+                <!-- Display Container -->
+                <div class="display-container">
+                    <input type="text" id="display" value="0" readonly>
+                    <div class="display-actions">
+                        <button id="copy-btn" class="display-icon-btn" title="Copy Result" onclick="copyDisplayToClipboard()">📋</button>
+                        <button id="history-toggle-btn" class="display-icon-btn" title="View History">🕧</button>
+                    </div>
+                </div>
+                
+                <!-- Keypad Grid -->
+                <div class="keypad">
+                    <!-- Row 1: AC button with tooltip -->
+                    <div class="tooltip-wrapper">
+                        <button id="ac-btn" class="btn action-btn">AC</button>
+                        
+                        <div id="ac-tooltip" class="hint-popup bottom-popup">
+                            <span class="popup-title">💡 Quick Tip</span>
+                            <p><b>Tap:</b> Erase single digit<br><b>Hold (0.5s):</b> Clear all</p>
+                            <button class="popup-close-btn" onclick="dismissTooltip('ac-tooltip')">Got it</button>
+                        </div>
+                    </div>
+
+                    <button class="btn action-btn" onclick="toggleSign()">+/-</button>
+                    <button class="btn action-btn" onclick="appendOperator('%')">%</button>
+                    <button class="btn op-btn" onclick="appendOperator('/')">÷</button>
+
+                    <!-- Row 2 -->
+                    <button class="btn num-btn" onclick="appendNumber('7')">7</button>
+                    <button class="btn num-btn" onclick="appendNumber('8')">8</button>
+                    <button class="btn num-btn" onclick="appendNumber('9')">9</button>
+                    <button class="btn op-btn" onclick="appendOperator('*')">x</button>
+
+                    <!-- Row 3 -->
+                    <button class="btn num-btn" onclick="appendNumber('4')">4</button>
+                    <button class="btn num-btn" onclick="appendNumber('5')">5</button>
+                    <button class="btn num-btn" onclick="appendNumber('6')">6</button>
+                    <button class="btn op-btn" onclick="appendOperator('-')">-</button>
+
+                    <!-- Row 4 -->
+                    <button class="btn num-btn" onclick="appendNumber('1')">1</button>
+                    <button class="btn num-btn" onclick="appendNumber('2')">2</button>
+                    <button class="btn num-btn" onclick="appendNumber('3')">3</button>
+                    <button class="btn op-btn" onclick="appendOperator('+')">+</button>
+
+                    <!-- Row 5 -->
+                    <button class="btn num-btn zero-btn" onclick="appendNumber('0')">0</button>
+                    <button class="btn num-btn" onclick="appendNumber('.')">.</button>
+                    <button class="btn equals-btn" onclick="calculate()">=</button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- History Panel Overlay -->
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Calculation History</h3>
+                <button class="close-btn" id="close-modal-btn">&times;</button>
+            </div>
+
+            <!-- Search bar -->
+            <div class="history-search-container">
+                <input type="text" id="history-search" placeholder="Search history...">
+            </div>
+
+            <div class="modal-body" id="history-list">
+                <div id="history-log">
+                    <p class="empty-msg">No calculations yet.</p>
+                    <p class="sub-empty-msg">Start solving and your history will appear here.</p>       
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="footer-btn export-btn" id="export-json-btn">Export JSON</button>
+                <button class="footer-btn export-btn" id="export-csv-btn">Export CSV</button>
+                <button class="footer-btn clear-history-btn" id="clear-history-btn">🗑️ Clear History</button>
+                <button class="footer-btn pin-btn" id="pinned-filter-btn">📌 Pinned</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

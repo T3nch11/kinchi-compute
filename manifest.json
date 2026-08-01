@@ -1,0 +1,21 @@
+{
+  "name": "Kinchi Compute",
+  "short_name": "Kinompute",
+  "description": "Your modern companion for quick calculations",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#7293ff",
+  "theme_color": "#7293ff",
+  "icons": [
+    {
+      "src": "applogo.png?v=2",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "applogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
