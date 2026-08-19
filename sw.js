@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kinchi-compute-v2S';
+const CACHE_NAME = 'kinchi-compute-v26';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
