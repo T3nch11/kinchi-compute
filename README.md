@@ -51,4 +51,4 @@ Want to run or modify this project locally?
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/T3nch11/kinchi-compute.git](https://github.com/T3nch11/kinchi-compute.git)
+   git clone [https://t3nch11.github.io/kinchi-compute/git](https://github.com/T3nch11/kinchi-compute.git)
