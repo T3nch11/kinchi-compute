@@ -153,26 +153,36 @@ if (acBtn) {
 // Perform calculation
 function calculate() {
     try {
-        let expression = currentInput;
+        const display = document.getElementById('display');
+        let expression = display.value;
 
-        if (expression.includes('%')) {
-            expression = expression.replace(/%/g, '/100');
+        if (!expression || expression === 'Error') return;
+
+        // 1. Remove all spaces and normalize operators
+        let sanitized = expression
+            .replace(/\s+/g, '')
+            .replace(/×|x/gi, '*')
+            .replace(/÷/g, '/');
+
+        // 2. Fix leading zeros (handles cases like "01", "+01", "*007")
+        sanitized = sanitized.replace(/(^|[\+\-\*\/])0+([0-9]+)/g, '$1$2');
+
+        // 3. Evaluate safely
+        const result = Function(`'use strict'; return (${sanitized})`)();
+
+        if (isNaN(result) || !isFinite(result)) {
+            display.value = 'Error';
+            return;
         }
 
-        let result = Function('"use strict"; return (' + expression + ')')();
-
-        let formattedInput = currentInput.replace(/\*/g, 'x').replace(/\//g, '÷');
-        if (currentInput !== result.toString()) {
-            addHistoryItem(`${formattedInput} = ${result}`);
+        // 4. Save to history if function exists
+        if (typeof addHistoryItem === 'function') {
+            addHistoryItem(expression, result);
         }
 
-        currentInput = result.toString();
-        updateDisplay();
-        triggerFeedback('operator');
-    } catch (error) {
-        display.value = "Error";
-        currentInput = '0';
-        triggerFeedback('error');
+        display.value = result;
+    } catch (err) {
+        document.getElementById('display').value = 'Error';
     }
 }
 
